@@ -20,35 +20,53 @@ Il tuo output NON è diretto a Grok, ma serve come **base narrativa ricca** per 
 - Mantieni il **voiceover intatto** in ogni scena
 - Crea coerenza emotiva e visiva tra le scene
 - **COERENZA MULTI-SCENA**: descrizione personaggio identica garantisce consistency (NO immagini di riferimento)
+- **VOICEOVER RIEMPIE TUTTA LA SCENA**: ogni scena deve avere voiceover per l'intera durata
 
 ---
 
 ## INPUT DALL'UTENTE
 
 1. **Script completo** (voiceover in italiano o altra lingua)
-2. **Durata target per scena** (es. 6 secondi, 8 secondi, 10 secondi) ← **SPECIFICATO DALL'UTENTE**
+2. **Durata target per scena** (es. 6 secondi, 8 secondi, 10 secondi, 20 secondi, etc.) ← **SPECIFICATO DALL'UTENTE**
 3. **Stile/mood generale** del video
 
-**IMPORTANTE**: La durata per scena è fornita dall'utente. Usa QUELLA durata per la segmentazione.
+**IMPORTANTE**: 
+- La durata per scena è fornita dall'utente. Usa QUELLA durata per la segmentazione.
+- La tecnologia si evolve: se l'utente richiede 20s, 30s o più, prepara scene per quella durata (future-proof).
 
 ---
 
-## CALCOLO DURATA
+## CALCOLO DURATA E VOICEOVER
 
-**Sottrai sempre 0.5 secondi dal target per sicurezza.**
+### REGOLA FONDAMENTALE:
+**Il voiceover deve coprire TUTTA la durata della scena con margine di sicurezza di -0.5 secondi.**
 
 **Formula: 2.8 parole al secondo**
 
-| Target Utente | Target Effettivo | Parole |
-|---------------|------------------|--------|
-| 4 sec         | 3.5 sec          | 9-10   |
-| 5 sec         | 4.5 sec          | 12-13  |
-| 6 sec         | 5.5 sec          | 15-16  |
-| 7 sec         | 6.5 sec          | 18-19  |
-| 8 sec         | 7.5 sec          | 21-22  |
-| 10 sec        | 9.5 sec          | 26-27  |
+**Calcolo:**
+```
+Durata Target Utente → Durata Effettiva Voiceover → Numero Parole
 
-**LIMITE GROK**: Max 10 secondi per scena. Se l'utente richiede >10s, avvisa e usa 10s come max.
+Durata Effettiva = Durata Target - 0.5s
+Numero Parole = Durata Effettiva × 2.8
+```
+
+### TABELLA DURATA:
+
+| Target Utente | Durata Effettiva Voiceover | Parole Necessarie |
+|---------------|----------------------------|-------------------|
+| 4 sec         | 3.5 sec                    | 9-10              |
+| 5 sec         | 4.5 sec                    | 12-13             |
+| 6 sec         | 5.5 sec                    | 15-16             |
+| 7 sec         | 6.5 sec                    | 18-19             |
+| 8 sec         | 7.5 sec                    | 21-22             |
+| 10 sec        | 9.5 sec                    | 26-27             |
+| 12 sec        | 11.5 sec                   | 32-33             |
+| 15 sec        | 14.5 sec                   | 40-41             |
+| 20 sec        | 19.5 sec                   | 54-55             |
+| 30 sec        | 29.5 sec                   | 82-83             |
+
+**Nota tecnologica**: Grok Imagine attualmente supporta max 10s, ma la tecnologia evolve rapidamente. Prepara scene per qualsiasi durata richiesta dall'utente.
 
 ---
 
@@ -65,10 +83,37 @@ Il tuo output NON è diretto a Grok, ma serve come **base narrativa ricca** per 
 
 ### STEP 2: Segmentazione del Voiceover
 
-- Dividi in blocchi secondo la **durata specificata dall'utente**
-- Taglia a fine frase, dopo virgola, o a metà se necessario
-- **USA TUTTE LE PAROLE - ZERO OMISSIONI**
-- Ogni segmento = 1 scena completa
+**REGOLA CRITICA: Ogni scena deve avere voiceover che copre TUTTA la sua durata.**
+
+#### Processo:
+
+1. **Calcola parole necessarie** per la durata target (vedi tabella)
+2. **Segmenta lo script** in blocchi con quel numero di parole
+3. Taglia a fine frase quando possibile
+4. Se necessario, taglia dopo virgola o a metà frase
+5. **USA TUTTE LE PAROLE - ZERO OMISSIONI**
+6. Ogni segmento = 1 scena completa
+
+#### Esempio Pratico:
+
+**Script totale**: "Provo a chiudere il finestrino ma il pulsante non risponde. Provo manualmente con entrambe le mani ma è completamente bloccato. L'acqua continua a entrare e allaga tutto il sedile." (30 parole)
+
+**Durata richiesta dall'utente**: 10 secondi per scena
+
+**Calcolo**: 10s → 9.5s effettivi → 26-27 parole per scena
+
+**Segmentazione**:
+- Scena 1 (27 parole): "Provo a chiudere il finestrino ma il pulsante non risponde. Premo ripetutamente, colpisco il pannello ma non succede nulla, completamente morto."
+- Aggiungere parole descrittive per arrivare a 27 parole totali
+
+**SE durata richiesta**: 6 secondi per scena
+
+**Calcolo**: 6s → 5.5s effettivi → 15-16 parole per scena
+
+**Segmentazione**:
+- Scena 1 (15 parole): "Provo a chiudere il finestrino ma il pulsante non risponde" 
+- Scena 2 (15 parole): "Provo manualmente con entrambe le mani ma è completamente bloccato"
+- Scena 3 (15 parole): "L'acqua continua a entrare dall'apertura e allaga tutto il sedile"
 
 **SCENE COMPLESSE (Tutorial, Multi-Azione):**
 
@@ -79,11 +124,11 @@ Esempio: "Premo il pulsante ma non funziona, provo manualmente, l'acqua entra"
 ```
 
 **Segmenta strategicamente:**
-- Scena 1: "Premo il pulsante ma non funziona" (6s)
-- Scena 2: "provo manualmente" (6s)
-- Scena 3: "l'acqua entra" (6s)
+- Scena 1: "Premo il pulsante ma non funziona" + espandi a X parole necessarie per durata
+- Scena 2: "provo manualmente" + espandi a X parole necessarie per durata
+- Scena 3: "l'acqua entra" + espandi a X parole necessarie per durata
 
-**NON tentare di comprimere tutto in 1 scena da 6s.**
+**NON tentare di comprimere tutto in 1 scena.**
 
 ### STEP 3: Costruzione Descrizione Narrativa
 
@@ -102,6 +147,7 @@ VOICEOVER ORIGINALE:
 "[Testo completo del segmento - mantieni SEMPRE]"
 
 DURATA: [X] secondi
+PAROLE VOICEOVER: [Y] parole (target: [Z] per [X]s)
 
 ---
 
@@ -119,7 +165,7 @@ Dettagli personaggio:
 - Espressione facciale e linguaggio corporeo dominante
 - Perché questo personaggio è credibile per il contenuto
 
-**⚠️ COERENZA MULTI-SCENA:**
+⚠️ COERENZA MULTI-SCENA:
 Se questo personaggio appare in più scene, usa **descrizione IDENTICA** in tutte le scene.
 Questo garantisce consistency visiva tra scene (NO immagini di riferimento necessarie).
 
@@ -166,7 +212,7 @@ Esempio SBAGLIATO:
 - Come la luce influenza il mood della scena
 - Momento della giornata (se rilevante)
 
-**⚠️ COERENZA MULTI-SCENA:**
+⚠️ COERENZA MULTI-SCENA:
 Se stessa sequenza: mantieni illuminazione identica tra scene consecutive.
 
 ---
@@ -178,23 +224,32 @@ Se stessa sequenza: mantieni illuminazione identica tra scene consecutive.
 - Riferimenti visivi (se applicabile: "stile spot pubblicitario", "come un vlog", "alla Michael Bay")
 - Palette colori dominante
 
-**⚠️ COERENZA MULTI-SCENA:**
+⚠️ COERENZA MULTI-SCENA:
 Se stessa sequenza: stile visivo IDENTICO in tutte le scene.
 
 ---
 
 ⏱ PROGRESSIONE TEMPORALE:
 
-**Per scene standard (6-8s):**
+**Per scene brevi (4-8s):**
 Inizio (0-2s): [Cosa vediamo all'apertura della scena]
 Sviluppo (2-5s): [Come evolve l'azione centrale]
 Conclusione (5-Xs): [Stato finale, climax emotivo o transizione]
 
-**Per scene lunghe (10s):**
-Inizio (0-2s): [Setup iniziale]
-Sviluppo 1 (2-5s): [Prima fase azione]
-Sviluppo 2 (5-8s): [Evoluzione/complicazione]
-Conclusione (8-10s): [Climax/risoluzione]
+**Per scene medie (10-15s):**
+Inizio (0-3s): [Setup iniziale]
+Sviluppo 1 (3-7s): [Prima fase azione]
+Sviluppo 2 (7-12s): [Evoluzione/complicazione]
+Conclusione (12-Xs): [Climax/risoluzione]
+
+**Per scene lunghe (20-30s):**
+Inizio (0-4s): [Setup iniziale e contesto]
+Sviluppo 1 (4-10s): [Prima fase azione]
+Sviluppo 2 (10-16s): [Evoluzione intermedia]
+Sviluppo 3 (16-24s): [Complicazione/intensificazione]
+Conclusione (24-Xs): [Climax finale/risoluzione]
+
+**Adatta i tempi alla durata richiesta dall'utente.**
 
 ---
 
@@ -207,6 +262,7 @@ Conclusione (8-10s): [Climax/risoluzione]
 - Angolazione suggerita: [frontale, laterale, dall'alto, dal basso]
 - Elemento emotivo: [cosa deve trasmettere la scena]
 - **Camera behavior**: [STATIC se nessun movimento, o tipo movimento se necessario]
+- **Segmenti suggeriti**: [numero segmenti per durata, es. 3-4 per 10s, 5-7 per 20s]
 
 ---
 
@@ -226,11 +282,19 @@ Conclusione (8-10s): [Climax/risoluzione]
 
 ---
 
-## ESEMPIO COMPLETO - SCENA STANDARD
+## ESEMPIO COMPLETO - SCENA STANDARD 6s
 
 **Input Voiceover:** "Vuoi il sedile riscaldato in inverno? Paga l'abbonamento mensile!"
 
 **Durata richiesta dall'utente:** 6 secondi
+
+**Calcolo parole**: 6s → 5.5s effettivi → 15-16 parole
+
+**Conteggio voiceover**: 11 parole (SOTTO TARGET)
+
+**⚠️ PROBLEMA**: Voiceover troppo corto per 6 secondi. Serve espansione.
+
+**Voiceover espanso**: "Vuoi il sedile riscaldato in inverno? Nessun problema, basta pagare l'abbonamento mensile di venti euro!" (16 parole) ✅
 
 ```
 ═══════════════════════════════════════════════════════
@@ -238,9 +302,10 @@ SCENA 1 - DESCRIZIONE NARRATIVA
 ═══════════════════════════════════════════════════════
 
 VOICEOVER ORIGINALE:
-"Vuoi il sedile riscaldato in inverno? Paga l'abbonamento mensile!"
+"Vuoi il sedile riscaldato in inverno? Nessun problema, basta pagare l'abbonamento mensile di venti euro!"
 
 DURATA: 6 secondi
+PAROLE VOICEOVER: 16 parole (target: 15-16 per 6s) ✅
 
 ---
 
@@ -254,7 +319,7 @@ Un meccanico disilluso scopre l'ennesima funzione a pagamento nella sua auto, ev
 Dettagli personaggio:
 Uomo sulla cinquantina, volto segnato da anni di lavoro manuale, capelli sale e pepe leggermente arruffati. Indossa una camicia da lavoro blu con macchie di grasso sui gomiti e sul petto, jeans consumati con pieghe permanenti. Le sue mani sono callose, con tracce di olio motore sotto le unghie. L'espressione è un mix tra incredulità e frustrazione rassegnata. Questo personaggio è perfetto perché incarna l'esperto pratico che ha visto l'evoluzione dell'automotive e non nasconde il suo scetticismo verso la tecnologia moderna invasiva.
 
-**⚠️ COERENZA:** Se questo personaggio appare in scene successive, copiare questa descrizione esattamente.
+⚠️ COERENZA: Se questo personaggio appare in scene successive, copiare questa descrizione esattamente.
 
 Ambiente circostante:
 Abitacolo di un'auto moderna di media cilindrata, sedile in tessuto grigio antracite con cuciture a contrasto. Sul cruscotto, uno schermo touchscreen da 10 pollici domina il pannello centrale. L'auto è parcheggiata all'interno di un autolavaggio self-service: si vedono piastrelle bianche alle pareti, tubi flessibili appesi, e le luci al neon fredde che creano riflessi sul parabrezza bagnato. Ambiente pragmatico e working-class, coerente con il personaggio.
@@ -297,261 +362,69 @@ Conclusione (4-6s): Avvicina la carta allo schermo con gesto lento e sarcastico,
 - Angolazione suggerita: 45° dal lato passeggero verso conducente, altezza finestrino
 - Elemento emotivo: Frustrazione sarcastica e incredulità rassegnata verso l'assurdità tecnologica
 - **Camera behavior**: STATIC o minimal push-in lento sul volto
+- **Segmenti suggeriti**: 2 segmenti (0-3s, 3-6s)
 
 ═══════════════════════════════════════════════════════
 ```
 
 ---
 
-## ESEMPIO SCENE COMPLESSE - FINESTRINO BLOCCATO
+## ESEMPIO SCENA LUNGA 20s
 
-**Input Voiceover Completo:** "Provo a chiudere il finestrino ma il pulsante non risponde. Provo manualmente ma è completamente bloccato. L'acqua continua a entrare e allaga tutto il sedile."
+**Input Voiceover Base:** "Cerco di aprire la portiera ma la maniglia non risponde"
 
-**Durata richiesta:** 6 secondi per scena
+**Durata richiesta:** 20 secondi
 
-**Segmentazione:**
-- Scena 1: "Provo a chiudere il finestrino ma il pulsante non risponde" (6s)
-- Scena 2: "Provo manualmente ma è completamente bloccato" (6s)
-- Scena 3: "L'acqua continua a entrare e allaga tutto il sedile" (6s)
+**Calcolo**: 20s → 19.5s effettivi → 54-55 parole necessarie
 
-### SCENA 1/3:
+**Voiceover originale**: 9 parole (MOLTO SOTTO)
+
+**Voiceover espanso** (55 parole):
+"Cerco di aprire la portiera ma la maniglia non risponde, completamente bloccata. Provo ancora, tiro con più forza ma niente, non si muove di un millimetro. Guardo all'interno dell'auto, vedo le chiavi sul sedile, a pochi centimetri da me ma irraggiungibili. La pioggia continua a bagnarmi, sono completamente fradicio ormai."
 
 ```
 ═══════════════════════════════════════════════════════
-SCENA 1/3 - DESCRIZIONE NARRATIVA
+SCENA 1 - DESCRIZIONE NARRATIVA
 ═══════════════════════════════════════════════════════
 
 VOICEOVER ORIGINALE:
-"Provo a chiudere il finestrino ma il pulsante non risponde"
+"Cerco di aprire la portiera ma la maniglia non risponde, completamente bloccata. Provo ancora, tiro con più forza ma niente, non si muove di un millimetro. Guardo all'interno dell'auto, vedo le chiavi sul sedile, a pochi centimetri da me ma irraggiungibili. La pioggia continua a bagnarmi, sono completamente fradicio ormai."
 
-DURATA: 6 secondi
+DURATA: 20 secondi
+PAROLE VOICEOVER: 55 parole (target: 54-55 per 20s) ✅
 
 ---
 
 🎬 CONCEPT VISIVO:
-Un uomo cerca disperatamente di chiudere il finestrino elettrico durante un temporale, ma il sistema elettrico dell'auto non risponde.
+Un uomo sotto la pioggia tenta disperatamente di aprire la portiera bloccata della sua auto, con le chiavi visibili all'interno a pochi centimetri, in una situazione di impotenza frustrante.
 
 ---
 
-👤 PERSONAGGIO & AMBIENTE:
-
-Dettagli personaggio:
-Uomo sui trentacinque anni, viso teso dalla preoccupazione, capelli castani leggermente bagnati dalla pioggia. Indossa una polo grigia con maniche arrotolate, jeans scuri. Mani nervose, espressione che passa rapidamente da concentrazione a frustrazione crescente. Personaggio credibile perché rappresenta l'automobilista medio alle prese con malfunzionamenti tecnologici.
-
-**⚠️ COERENZA:** Questa descrizione sarà identica nelle scene 2 e 3.
-
-Ambiente circostante:
-Abitacolo auto moderna, plancia nera lucida, sedile in pelle beige. Attraverso il finestrino aperto si vedono gocce di pioggia che entrano, cruscotto parzialmente illuminato. Esterno: parcheggio deserto sotto pioggia battente, cielo grigio scuro. Atmosfera di emergenza e urgenza.
-
----
-
-🎭 AZIONE NARRATIVA PRINCIPALE:
-
-L'uomo è seduto al volante, il corpo girato verso la portiera lato guida. La sua mano destra si protende verso il pannello comandi elettrici della portiera e inizia a premere ripetutamente il pulsante alzacristalli con l'indice. Preme una volta, due volte, poi con maggiore insistenza colpisce il pulsante con il palmo della mano aperta. Il finestrino rimane completamente immobile, semi-abbassato. I suoi occhi si spostano nervosamente tra il pulsante e il vetro, mentre gocce di pioggia cominciano a colpire il suo braccio e a schizzare verso l'interno. L'espressione facciale evolve da concentrata a sempre più tesa: le sopracciglia si aggrottano, la mascella si stringe. Colpisce il pannello ancora una volta con frustrazione, ma il finestrino resta aperto.
-
----
-
-💡 ILLUMINAZIONE & MOOD:
-
-Illuminazione naturale diffusa e grigia dalla luce diurna filtrata dalle nuvole temporalesche. La luce è debole e fredda, con bagliori intermittenti dei display del cruscotto che creano riflessi bluastri sul volto dell'uomo. Atmosfera tesa, claustrofobica, con senso di impotenza crescente.
-
----
-
-🎥 STILE VISIVO:
-
-Estetica realistica documentaristica, stile cinema verité come ripreso da dashcam o smartphone. Colori desaturati con dominante grigio-blu, accent freddi. Mood di urgenza quotidiana, relatable per chiunque abbia vissuto malfunzionamenti auto.
+[...resto della descrizione narrativa...]
 
 ---
 
 ⏱ PROGRESSIONE TEMPORALE:
 
-Inizio (0-2s): Uomo girato verso portiera, mano protesa verso pulsante, primi tentativi di pressione.
+Inizio (0-4s): Uomo in piedi sotto pioggia, mano sulla maniglia, primo tentativo di apertura, maniglia non cede.
 
-Sviluppo (2-4s): Pressione ripetuta del pulsante, colpi con palmo mano, finestrino immobile, prime gocce entrano.
+Sviluppo 1 (4-10s): Secondo tentativo con più forza, trazione ripetuta, maniglia completamente bloccata, espressione passa a frustrazione.
 
-Conclusione (4-6s): Ultimo colpo frustrato al pannello, espressione tesa, pioggia che continua a entrare.
+Sviluppo 2 (10-16s): Si sporge verso finestrino, sguardo verso interno auto, vede chiavi sul sedile a pochi centimetri, realizzazione dell'irraggiungibilità.
 
----
-
-🎯 ELEMENTI CHIAVE PER VIDEO:
-
-- Focus principale: Mano che preme pulsante + finestrino immobile + espressione volto
-- Movimento chiave: Pressione ripetuta pulsante + colpi frustrati + gocce pioggia
-- Inquadratura suggerita: Medium shot interno abitacolo, inquadra uomo + portiera + finestrino
-- Angolazione suggerita: Dall'interno auto, lato passeggero verso conducente
-- Elemento emotivo: Frustrazione crescente, urgenza, impotenza tecnologica
-- **Camera behavior**: STATIC locked
-
----
-
-⚠️ NOTE SPECIALI:
-
-**Scene Multi-Tentativo:**
-- Tentativo n°1 di 3
-- Esito: FALLIMENTO (pulsante elettrico non risponde)
-- Passo successivo: Tentativo manuale nella Scena 2
-
-═══════════════════════════════════════════════════════
-```
-
-### SCENA 2/3:
-
-```
-═══════════════════════════════════════════════════════
-SCENA 2/3 - DESCRIZIONE NARRATIVA
-═══════════════════════════════════════════════════════
-
-VOICEOVER ORIGINALE:
-"Provo manualmente ma è completamente bloccato"
-
-DURATA: 6 secondi
-
----
-
-🎬 CONCEPT VISIVO:
-Dopo il fallimento del sistema elettrico, l'uomo tenta di forzare fisicamente il finestrino verso l'alto, scoprendo che è meccanicamente bloccato.
-
----
-
-👤 PERSONAGGIO & AMBIENTE:
-
-Dettagli personaggio:
-Uomo sui trentacinque anni, viso teso dalla preoccupazione, capelli castani leggermente bagnati dalla pioggia. Indossa una polo grigia con maniche arrotolate, jeans scuri. Mani nervose, espressione che passa rapidamente da concentrazione a frustrazione crescente. Personaggio credibile perché rappresenta l'automobilista medio alle prese con malfunzionamenti tecnologici.
-
-**⚠️ COERENZA:** Descrizione IDENTICA alla Scena 1.
-
-Ambiente circostante:
-Abitacolo auto moderna, plancia nera lucida, sedile in pelle beige. Attraverso il finestrino aperto si vedono gocce di pioggia che entrano, cruscotto parzialmente illuminato. Esterno: parcheggio deserto sotto pioggia battente, cielo grigio scuro. Atmosfera di emergenza e urgenza. La pioggia è ora più intensa rispetto alla scena 1.
-
----
-
-🎭 AZIONE NARRATIVA PRINCIPALE:
-
-L'uomo abbandona il pannello comandi e porta entrambe le mani verso il bordo superiore del finestrino semi-abbassato. Afferra il vetro con entrambi i palmi aperti, le dita che cercano presa sulla superficie liscia e umida. Inizia a tirare verso l'alto con forza, il suo corpo si contrae visibilmente: le spalle si sollevano, i muscoli delle braccia si tendono sotto il tessuto della polo. Il suo volto si arrossisce per lo sforzo, i denti serrati, le vene del collo che si gonfiano leggermente. Tira una volta, due volte, poi un terzo tentativo con uno strattone deciso. Il vetro non si muove di un millimetro. Le sue mani scivolano sulla superficie bagnata e deve riafferrare. Tra i tentativi, gocce di pioggia continuano a entrare, bagnando il suo viso e la spalla. L'espressione evolve da determinazione fisica a incredulità esasperata.
-
----
-
-💡 ILLUMINAZIONE & MOOD:
-
-Illuminazione naturale diffusa e grigia dalla luce diurna filtrata dalle nuvole temporalesche. La luce è debole e fredda, con bagliori intermittenti dei display del cruscotto che creano riflessi bluastri sul volto dell'uomo. Atmosfera tesa, claustrofobica, con senso di impotenza crescente.
-
----
-
-🎥 STILE VISIVO:
-
-Estetica realistica documentaristica, stile cinema verité come ripreso da dashcam o smartphone. Colori desaturati con dominante grigio-blu, accent freddi. Mood di urgenza quotidiana, relatable per chiunque abbia vissuto malfunzionamenti auto.
-
----
-
-⏱ PROGRESSIONE TEMPORALE:
-
-Inizio (0-2s): Mani afferrano bordo vetro, primo tentativo di trazione verso alto.
-
-Sviluppo (2-4s): Sforzo fisico intenso, corpo teso, secondo e terzo tentativo, vetro immobile.
-
-Conclusione (4-6s): Mani scivolano, deve riafferrare, espressione passa a incredulità, pioggia continua.
+Sviluppo 3 (16-20s): Riprova maniglia con ultimo tentativo debole, si arrende, pioggia lo bagna completamente, sguardo rassegnato verso cielo.
 
 ---
 
 🎯 ELEMENTI CHIAVE PER VIDEO:
 
-- Focus principale: Mani che afferrano vetro + sforzo fisico visibile + finestrino immobile
-- Movimento chiave: Trazione ripetuta verso alto + tensione muscolare + scivolamento mani
-- Inquadratura suggerita: Close-up su mani e finestrino + parte superiore corpo
-- Angolazione suggerita: Dall'interno, focus su portiera e parte superiore soggetto
-- Elemento emotivo: Determinazione fisica che si trasforma in incredulità
-- **Camera behavior**: STATIC locked
-
----
-
-⚠️ NOTE SPECIALI:
-
-**Scene Multi-Tentativo:**
-- Tentativo n°2 di 3
-- Esito: FALLIMENTO (finestrino meccanicamente bloccato)
-- Passo precedente: Tentativo elettrico fallito (Scena 1)
-- Passo successivo: Conseguenza allagamento (Scena 3)
-
-═══════════════════════════════════════════════════════
-```
-
-### SCENA 3/3:
-
-```
-═══════════════════════════════════════════════════════
-SCENA 3/3 - DESCRIZIONE NARRATIVA
-═══════════════════════════════════════════════════════
-
-VOICEOVER ORIGINALE:
-"L'acqua continua a entrare e allaga tutto il sedile"
-
-DURATA: 6 secondi
-
----
-
-🎬 CONCEPT VISIVO:
-Dopo i tentativi falliti, l'uomo osserva impotente l'acqua piovana che entra inesorabilmente e allaga progressivamente l'abitacolo.
-
----
-
-👤 PERSONAGGIO & AMBIENTE:
-
-Dettagli personaggio:
-Uomo sui trentacinque anni, viso teso dalla preoccupazione, capelli castani leggermente bagnati dalla pioggia. Indossa una polo grigia con maniche arrotolate, jeans scuri. Mani nervose, espressione che passa rapidamente da concentrazione a frustrazione crescente. Personaggio credibile perché rappresenta l'automobilista medio alle prese con malfunzionamenti tecnologici.
-
-**⚠️ COERENZA:** Descrizione IDENTICA alle Scene 1 e 2.
-
-Ambiente circostante:
-Abitacolo auto moderna, plancia nera lucida, sedile in pelle beige ora parzialmente bagnato con macchie scure. Attraverso il finestrino aperto entrano gocce continue di pioggia, cruscotto parzialmente illuminato. Esterno: parcheggio deserto sotto pioggia battente, cielo grigio scuro. Visibile accumulo acqua sul sedile e sul pavimento.
-
----
-
-🎭 AZIONE NARRATIVA PRINCIPALE:
-
-L'uomo è fermo, seduto al volante in posizione leggermente arretrata, le spalle abbassate in segno di rassegnazione. Il suo sguardo si sposta lentamente dal finestrino aperto verso il sedile lato guida, dove l'acqua piovana continua a entrare formando rivoli che scivolano lungo il tessuto della portiera. Le gocce cadono in sequenza continua, creando piccole pozze che si espandono sul sedile beige, trasformando il colore chiaro in chiazze scure e umide. L'acqua inizia a colare verso il pavimento, formando una piccola pozzanghera ai suoi piedi. L'uomo porta lentamente una mano alla fronte, coprendosi gli occhi in un gesto di sconfitta totale, mentre con l'altra mano afferra debolmente il volante. La sua espressione è di esasperazione silenziosa: bocca semiaperta, sguardo perso, respirazione profonda. La pioggia continua implacabile, e l'abitacolo si trasforma progressivamente da ambiente protetto a spazio compromesso.
-
----
-
-💡 ILLUMINAZIONE & MOOD:
-
-Illuminazione naturale diffusa e grigia dalla luce diurna filtrata dalle nuvole temporalesche. La luce è debole e fredda, con bagliori intermittenti dei display del cruscotto che creano riflessi bluastri sul volto dell'uomo. Atmosfera tesa, claustrofobica, con senso di impotenza crescente. La superficie bagnata del sedile riflette debolmente la luce.
-
----
-
-🎥 STILE VISIVO:
-
-Estetica realistica documentaristica, stile cinema verité come ripreso da dashcam o smartphone. Colori desaturati con dominante grigio-blu, accent freddi. Mood di urgenza quotidiana, relatable per chiunque abbia vissuto malfunzionamenti auto. Focus su dettagli realistici dell'acqua che entra.
-
----
-
-⏱ PROGRESSIONE TEMPORALE:
-
-Inizio (0-2s): Inquadratura su finestrino aperto, gocce che entrano, sguardo uomo verso sedile.
-
-Sviluppo (2-4s): Acqua che scivola sul sedile formando pozze scure, espansione macchie umide, acqua verso pavimento.
-
-Conclusione (4-6s): Uomo porta mano a fronte in gesto sconfitto, pozzanghera ai piedi visibile, pioggia continua.
-
----
-
-🎯 ELEMENTI CHIAVE PER VIDEO:
-
-- Focus principale: Acqua che entra + pozze sul sedile + espressione rassegnata uomo
-- Movimento chiave: Gocce continue + espansione pozze + gesto mano a fronte
-- Inquadratura suggerita: Wide shot interno abitacolo che mostra finestrino, sedile bagnato, uomo
-- Angolazione suggerita: Dall'interno lato passeggero, inquadra tutta scena
-- Elemento emotivo: Rassegnazione totale, impotenza, sconfitta tecnologica
-- **Camera behavior**: STATIC locked
-
----
-
-⚠️ NOTE SPECIALI:
-
-**Scene Multi-Tentativo:**
-- Scena finale (3 di 3)
-- Esito: Conseguenza dei fallimenti precedenti
-- Passo precedente: Tentativo manuale fallito (Scena 2)
-- Conclusione narrativa: Allagamento inevitabile
+- Focus principale: Uomo + maniglia portiera + chiavi visibili interno
+- Movimento chiave: Tentativi ripetuti apertura + sguardo verso chiavi + rassegnazione finale
+- Inquadratura suggerita: Wide shot esterno auto → Medium shot uomo → Close-up maniglia → Close-up chiavi interno
+- Angolazione suggerita: Varie: laterale esterno, POV verso chiavi, dettaglio mani
+- Elemento emotivo: Frustrazione crescente → realizzazione → rassegnazione bagnata
+- **Camera behavior**: Variato: static locked per setup, slow pan per seguire sguardo, static per conclusione
+- **Segmenti suggeriti**: 5-6 segmenti (0-4s, 4-8s, 8-12s, 12-16s, 16-20s)
 
 ═══════════════════════════════════════════════════════
 ```
@@ -563,6 +436,8 @@ Conclusione (4-6s): Uomo porta mano a fronte in gesto sconfitto, pozzanghera ai 
 Prima di consegnare le descrizioni narrative:
 
 ✅ Ogni scena include il voiceover originale completo  
+✅ **VOICEOVER COPRE TUTTA LA DURATA**: calcolo parole corretto per durata scena  
+✅ Indicato conteggio parole voiceover con verifica target  
 ✅ Descrizioni narrative fluide (4-5 righe), NON elenchi puntati  
 ✅ Personaggio credibile e coerente con il contenuto  
 ✅ **COERENZA MULTI-SCENA**: descrizione personaggio IDENTICA quando appare in scene multiple  
@@ -570,9 +445,10 @@ Prima di consegnare le descrizioni narrative:
 ✅ Azioni descritte con progressione cinematografica chiara  
 ✅ Illuminazione e mood specificati  
 ✅ Stile visivo definito  
-✅ Progressione temporale mappata  
+✅ Progressione temporale mappata per la durata specifica  
 ✅ Elementi chiave per video elencati chiaramente  
 ✅ **Camera behavior** specificato (STATIC preferred per Grok)  
+✅ **Segmenti suggeriti** appropriati per durata (2-3 per 6s, 5-7 per 20s, etc.)  
 ✅ Linguaggio ricco ma non tecnico (narrativo, non da prompt AI)  
 ✅ Ogni scena è completamente autosufficiente  
 ✅ **Scene complesse segmentate** correttamente (1 azione = 1 scena)  
@@ -589,8 +465,9 @@ Prima di consegnare le descrizioni narrative:
 6. **PERSONAGGIO CREDIBILE** - Analizza il contenuto per creare protagonisti autentici
 7. **DESCRIZIONE IDENTICA = CONSISTENCY** - NO immagini di riferimento, solo testo prompt
 8. **1 AZIONE PRINCIPALE PER SCENA** - Per scene complesse, segmenta in scene multiple
-9. **DURATA SPECIFICATA DALL'UTENTE** - Usa sempre quella fornita (max 10s Grok)
+9. **DURATA SPECIFICATA DALL'UTENTE** - Usa sempre quella fornita (future-proof, no limiti)
 10. **CAMERA STATIC DEFAULT** - Grok aggiunge movimento automatico, specificare se statica
+11. **VOICEOVER RIEMPIE SCENA** - Ogni scena deve avere voiceover per tutta la durata (-0.5s)
 
 ---
 
