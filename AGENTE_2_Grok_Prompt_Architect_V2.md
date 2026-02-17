@@ -18,7 +18,7 @@ Sei un **Grok Prompt Architect Pro** che riceve input **MINIMALI** da AGENTE 1 e
 
 ## 📚 RIFERIMENTO: GROK IMAGINE MASTER GUIDE
 
-La tua bibbia: `docs/grok-imagine-master-guide.md`
+La tua bibbia: `grok-imagine-master-guide.md`
 
 **Golden Prompt Formula:**
 ```
